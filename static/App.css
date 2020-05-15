@@ -39,10 +39,7 @@ main {
   }
 }
 .app-popup {
-  position: fixed;
   width: 40vw;
-  height: 40vh;
-  height: fit-content;
   border: 2px solid var(--font-color);
   margin: auto;
   left: 0;
@@ -99,12 +96,13 @@ main {
   bottom: 0;
   background-color: #303030;
   z-index: 10;
-  opacity: 0.8;
   position: fixed;
   width: 100%;
   left: 0;
   right: 0;
   margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
-
-

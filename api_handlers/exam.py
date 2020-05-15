@@ -140,6 +140,8 @@ def grade_test(js: dict):
     test_info: dict = _get_subject_test_info(student)
 
     previous_subject = test_info.get(subject, {})
+    if previous_subject.get("submitted"):
+        return {"error": "Already graded"}
     time_taken_at = previous_subject.get("test_taken_at")
 
     question_paper = get_question_paper(student.grade, subject)

@@ -6,6 +6,7 @@ import urlencode from "@hydrophobefireman/j-utils/@build-modern/src/modules/urle
 import AuthStateSensitiveComponent from "../_AuthStateSensitiveComponent";
 import Logo from "../../dps.jpg";
 
+const strings = appEvents.getStrings();
 const store = appEvents.getStore();
 
 export default class Landing extends AuthStateSensitiveComponent {
@@ -55,7 +56,7 @@ export default class Landing extends AuthStateSensitiveComponent {
     this.setState({ isFetching: false });
   };
   _resetError = () => this.setState({ error: null });
-  render(props, state) {
+  render(_, state) {
     return h(
       "div",
       { style: { "margin-top": "2rem" } },
@@ -66,29 +67,33 @@ export default class Landing extends AuthStateSensitiveComponent {
         h(
           "div",
           { style: { width: "95%", margin: "auto" } },
-          h("div", { class: "anim-hi" }, "Welcome"),
+          h("div", { class: "anim-hi" }, strings.Landing$Welcome),
           h(
             "form",
             { action: "javascript:", onSubmit: this._fetchDetails },
-            h("div", null, "Enter your details"),
+            h("div", null, strings.Landing$RequestDetails),
             h("input", {
               class: "form-inx",
-              placeholder: "Scholar No.",
+              placeholder: strings.Login$Scholar,
               value: state.scholar || "",
               onInput: this.onInputScholarNumber,
             }),
             h("input", {
               class: "form-inx",
-              placeholder: "Date of Birth (DD-MM-YYYY)",
+              placeholder: strings.Login$DateOfBirth,
               onInput: this.onInputDob,
             }),
             !!(state.scholar && state.dob) &&
-              h("button", { class: "submit-prof hoverable" }, "Login"),
-            state.isFetching && h("div", null, "Checking your details")
+              h(
+                "button",
+                { class: "submit-prof hoverable" },
+                strings.Login$login
+              ),
+            state.isFetching && h("div", null, strings.Login$InProgressText)
           ),
           state.error &&
             h(ErrorPopup, {
-              errorHead: "Can't login",
+              errorHead: strings.Login$ErrorText,
               reasons: [state.error],
               close: this._resetError,
             })

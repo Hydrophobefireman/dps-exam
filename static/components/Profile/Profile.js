@@ -2,8 +2,10 @@ import { Component, redirect, h, loadURL } from "@hydrophobefireman/ui-lib";
 import { appEvents } from "../../globalStore";
 import { exam, user } from "../../apiRoutes";
 import { getRequest, postJSONRequest } from "../../http/requests";
-import { toHours, timeLeft$, tFix } from "../common";
+import { toHours } from "../common";
+
 const store = appEvents.getStore();
+const strings = appEvents.getStrings();
 
 export default class Profile extends Component {
   componentDidMount() {
@@ -25,11 +27,17 @@ export default class Profile extends Component {
       redirect("/");
     });
   render(_, state) {
-    if (!store.userData) return "loading";
+    if (!store.userData) return strings.Loading$Default;
     return h(
       "div",
       null,
-      h("div", null, "Class of '", store.userData.grade === 10 ? "23" : "21"),
+      h(
+        "div",
+        null,
+        strings.Profile$ClassOf,
+        " '",
+        store.userData.grade === 10 ? "23" : "21"
+      ),
       h(
         "div",
         { class: "prof-data-box" },
@@ -40,17 +48,7 @@ export default class Profile extends Component {
       h(
         "div",
         null,
-        h(
-          "div",
-          {
-            style: {
-              fontWeight: "bold",
-              fontSize: "1.4rem",
-              marginBottom: "10px",
-            },
-          },
-          "Your Subjects"
-        ),
+        h("div", { class: "your-subjects" }, strings.Profile$YourSubjects),
         h(
           "div",
           { class: "subject-info help-box" },
@@ -68,7 +66,7 @@ export default class Profile extends Component {
             class: "submit-exam hoverable",
             style: { marginTop: "30px" },
           },
-          "Logout"
+          strings.Logout$logout
         )
       )
     );
@@ -139,7 +137,7 @@ function getTestInfo(x) {
         onClick: x.subject ? loadNextExam : null,
         "data-subject": sub,
       },
-      x.subject ? "Begin Examination" : "Loading..."
+      x.subject ? strings.Exam$Begin : strings.Loading$Default
     )
   );
 }

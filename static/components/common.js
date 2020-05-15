@@ -1,9 +1,11 @@
 import { Component, h, Fragment } from "@hydrophobefireman/ui-lib";
+import { appEvents } from "../globalStore";
+const strings = appEvents.getStrings();
 export function ErrorPopup(props) {
-  return h(Popup, { ...props, title: "An error occured" });
+  return h(Popup, { ...props, title: strings.Error$TitleDefault });
 }
 export function SuccessPopup(props) {
-  return h(Popup, { ...props, title: "Success" });
+  return h(Popup, { ...props, title: strings.Success$TitleDefault });
 }
 export const sanitizeRegExp = /([^\w]|_)/g;
 
@@ -17,29 +19,32 @@ export class Popup extends Component {
     return h(
       Fragment,
       null,
-      h("div", { class: "mask" }),
       h(
         "div",
-        { class: "app-popup" },
-        h("div", { class: "heading-text clr app-popup-title" }, props.title),
-        h("div", null, props.errorHead),
+        { class: "mask" },
         h(
           "div",
-          { class: "err-reasons" },
+          { class: "app-popup" },
+          h("div", { class: "heading-text clr app-popup-title" }, props.title),
+          h("div", null, props.errorHead),
           h(
             "div",
-            null,
-            (props.reasons || []).map((x) => h("div", null, x))
+            { class: "err-reasons" },
+            h(
+              "div",
+              null,
+              (props.reasons || []).map((x) => h("div", null, x))
+            )
+          ),
+          h(
+            "button",
+            {
+              id: this.__id,
+              class: "app-popup-close",
+              onClick: props.close,
+            },
+            "OK"
           )
-        ),
-        h(
-          "button",
-          {
-            id: this.__id,
-            class: "app-popup-close",
-            onClick: props.close,
-          },
-          "OK"
         )
       )
     );

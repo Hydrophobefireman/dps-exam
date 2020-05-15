@@ -10,6 +10,7 @@ import { ComponentLoader } from "./ComponentLoader";
 import { appEvents } from "./globalStore";
 import { handler } from "./authHandler";
 import { LoadingDefaultComponent, UnexpectedError } from "./FallbackComponents";
+import { strings } from "./strings-en";
 
 import "./App.css";
 import "./components/Landing/Landing.css";
@@ -17,6 +18,7 @@ import "./components/Profile/Profile.css";
 import "./components/Exam/Exam.css";
 
 const store = appEvents.getStore();
+appEvents.set("$fetchedStringData", strings);
 
 class App extends Component {
   componentDidMount() {
@@ -38,7 +40,6 @@ async function fetchUserData() {
   if (store.isLoggedIn) return ret;
   try {
     await handler.checkAuth();
-    // await import("./")
   } catch (e) {
     console.log(e);
     return UnexpectedError;

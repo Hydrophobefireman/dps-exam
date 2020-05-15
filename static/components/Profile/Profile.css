@@ -60,3 +60,9 @@
   min-height: 2rem;
   margin: 5px;
 }
+
+.your-subject {
+  font-weight: bold;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}

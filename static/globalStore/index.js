@@ -3,6 +3,7 @@ import FakeSet from "@hydrophobefireman/j-utils/@build-modern/src/modules/es6/lo
 const STORE = {
   userData: null,
   examBeginTimeStamp: null,
+  $fetchedStringData: {},
 };
 
 Object.defineProperty(STORE, "isLoggedIn", {
@@ -35,5 +36,8 @@ export const appEvents = {
   },
   getStore() {
     return STORE;
+  },
+  getStrings() {
+    return STORE.$fetchedStringData;
   },
 };

@@ -14,7 +14,7 @@ import Question from "./Question";
 import TimeLeft from "./TimeLeft";
 
 const store = appEvents.getStore();
-
+const strings = appEvents.getStrings();
 export default class Exam extends Component {
   state = {
     isFetching: false,
@@ -101,7 +101,7 @@ export default class Exam extends Component {
 
     const qs = new URLSearchParams(Router.getQs).get("sub");
 
-    if (!qs) return this.setState({ error: "Invalid Exam" });
+    if (!qs) return this.setState({ error: strings.Exam$Invalid });
 
     this.setState({ isFetching: true });
 
@@ -132,7 +132,7 @@ export default class Exam extends Component {
 
   _clearError = () => this.setState({ $AnswerError: null });
 
-  __closeTest = () => redirect("/");
+  __closeTest = () => redirect("/profile");
 
   render(_, state) {
     if (state.error)
@@ -142,44 +142,43 @@ export default class Exam extends Component {
       return h(Popup, {
         close: this._clearError,
 
-        title: "Unanswered Questions Left",
+        title: strings.Exam$UnansweredQuestionsLeft,
 
-        errorHead:
-          "There is no negative marking. Please answer the following questions",
+        errorHead: strings.Exam$NoNegativeMarking,
 
         reasons: [state.$AnswerError],
       });
 
     if (state.isFetching)
-      return h("div", { style: centerTextCSS }, "Loading questions");
+      return h("div", { style: centerTextCSS }, strings.Exam$LoadingQuestions);
 
     if (state.timeOver)
       return h(Popup, {
         close: this._closePopup,
 
-        title: "Time up",
+        title: strings.Exam$TimeUp,
 
-        errorHead: "Your answers are being submitted",
+        errorHead: strings.Exam$TimeUpAnswerSubmitInfo,
       });
 
     if (state.awaitingScore) {
-      return h("div", { style: centerTextCSS }, "Calculating your score");
+      return h("div", { style: centerTextCSS }, strings.Exam$CalculatingScore);
     }
 
     if (state.results) {
       return h(Popup, {
         close: this.__closeTest,
 
-        title: "Results",
+        title: strings.Exam$ResultText,
 
         errorHead: h(
           Fragment,
 
           null,
 
-          h("div", null, "Maximum Marks: " + state.results.total),
+          h("div", null, strings.Exam$MaximumMarks + state.results.total),
 
-          h("div", null, "Your score: ")
+          h("div", null, strings.Exam$YourScore)
         ),
 
         reasons: [state.results.score],
@@ -205,7 +204,7 @@ export default class Exam extends Component {
           "div",
           { class: "total-time" },
 
-          "Time allotted - ",
+          strings.Exam$TimeAllotted,
 
           h("span", { class: "bold" }, toHours(state.questions.time_allotted))
         ),
@@ -215,7 +214,7 @@ export default class Exam extends Component {
 
           { class: "t-left" },
 
-          "Time Left - ",
+          strings.Exam$TimeLeft,
 
           h(TimeLeft, {
             timeOver: this.timeOver,
@@ -242,7 +241,7 @@ export default class Exam extends Component {
         h(
           "button",
           { class: "submit-exam hoverable", onClick: this._submit },
-          "Submit"
+          strings.Exam$Submit
         )
       )
     );

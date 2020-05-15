@@ -17,4 +17,5 @@ export type Store = {
   currentTheme?: "";
   eventBegan?: boolean;
   eventBeginTimeStamp?: number;
+  $fetchedStringData?: import("./strings-en").strings;
 };
