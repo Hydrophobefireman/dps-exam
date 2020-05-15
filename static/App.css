@@ -1,0 +1,110 @@
+html {
+  /* --background-color: #1e1e1e; */
+  --background-color: #fff;
+  --font-color: #3e3b3b;
+  --default-font: "varela round", sans-serif;
+  font-family: var(--default-font);
+  -webkit-tap-highlight-color: transparent;
+  --border-shadow-color: #e3e3e3;
+}
+
+body {
+  font-family: var(--default-font);
+  font-size: 1.2rem;
+  color: var(--font-color);
+}
+
+main {
+  margin: auto;
+  text-align: center;
+}
+
+.hoverable:not([disabled]) {
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  transform-style: preserve-3d;
+}
+.hoverable:active:not([disabled]),
+.hoverable:focus:not([disabled]),
+.hoverable:hover:not([disabled]) {
+  transform: perspective(1px) scale(1.048) translateZ(0);
+}
+
+@keyframes scale_anim {
+  from {
+    transform: scale(0.01);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.app-popup {
+  position: fixed;
+  width: 40vw;
+  height: 40vh;
+  height: fit-content;
+  border: 2px solid var(--font-color);
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  transform: scale(0.01);
+  bottom: 0;
+  border-radius: 16px;
+  text-align: center;
+  overflow: auto;
+  z-index: 25;
+  background: var(--background-color);
+  animation: scale_anim 0.2s linear;
+  animation-fill-mode: forwards;
+}
+
+.app-popup-title {
+  margin-top: 10px;
+  border-bottom: 2px solid var(--font-color);
+  padding: 8px;
+  font-size: 1.2rem;
+}
+.app-popup-close {
+  display: block;
+  /* position: absolute; */
+  bottom: 0;
+  z-index: 100;
+  margin: auto;
+  text-align: center;
+  left: 0;
+  padding: 3px;
+  right: 0;
+  border: 1px solid var(--font-color);
+  /* background: var(--font-color); */
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 50%;
+  color: var(--font-color);
+  padding: 5px;
+}
+.bold {
+  font-weight: bold;
+}
+@media only screen and (max-width: 900px) {
+  .app-popup {
+    padding: 10px;
+    width: 85vw;
+  }
+}
+.mask {
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  background-color: #303030;
+  z-index: 10;
+  opacity: 0.8;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+

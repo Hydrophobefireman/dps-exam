@@ -1,0 +1,62 @@
+.prof-data-box {
+  text-align: left;
+  text-transform: capitalize;
+  /* margin-top: 10px; */
+}
+
+.prof-container {
+  margin: 30px;
+  border-bottom: 2px solid var(--font-color);
+}
+
+.prof-field {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.subject-info {
+  padding: 10px;
+  flex-direction: row;
+  display: flex;
+}
+.subject-info-container {
+  text-align: left;
+  border: 2px solid var(--font-color);
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.subject-child {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  text-transform: capitalize;
+}
+.next-exam {
+  border: 1px solid var(--font-color);
+  outline: none;
+  text-transform: capitalize;
+  background: transparent;
+  border-radius: 20px;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media only screen and (max-width: 700px) {
+  .subject-info {
+    border: 2px solid var(--font-color);
+    margin-top: 10px;
+    flex-direction: column;
+    border-radius: 20px;
+  }
+  .subject-info.help-box {
+    display: none;
+  }
+}
+
+.place-holder {
+  background: #e3e3e3;
+  border-radius: 20px;
+  min-height: 2rem;
+  margin: 5px;
+}

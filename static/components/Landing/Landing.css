@@ -1,0 +1,44 @@
+@keyframes blur_anim {
+  from {
+    filter: blur(5px);
+  }
+  to {
+    filter: blur(0px);
+  }
+}
+
+.anim-hi {
+  filter: blur(5px);
+  animation: blur_anim 0.3s linear;
+  animation-fill-mode: forwards;
+  font-size: 4rem;
+}
+
+.form-inx {
+  width: 60%;
+  padding: 0.5rem;
+  border: 2px solid var(--font-color);
+  border-radius: 10px;
+  font-size: 1.1rem;
+  outline: none;
+  margin-top: 10px;
+}
+.submit-prof {
+  display: block;
+  margin: auto;
+  margin-top: 15px;
+  width: 20%;
+  padding: 0.3rem;
+  border-radius: 10px;
+  border: 2px solid var(--font-color);
+  background: transparent;
+  outline: none;
+}
+
+.name-student {
+  text-transform: capitalize;
+}
+
+.landing-component {
+  margin-top: 6rem;
+}
