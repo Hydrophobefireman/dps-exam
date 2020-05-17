@@ -14,6 +14,7 @@ const componentMap = {
   "/profile": () => import("./components/Profile/Profile").then(getDefault),
   "/exam": () => import("./components/Exam/Exam").then(getDefault),
   "/admin": () => import("./components/Admin/Admin").then(getDefault),
+  "/report": () => import("./components/Report/Report").then(getDefault),
 };
 
 const getDefault = (module_) => module_.default;

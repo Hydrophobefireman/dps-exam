@@ -84,3 +84,7 @@ span.q-main {
 .underline {
   text-decoration: underline;
 }
+
+.question-choice.correct {
+  background: #3ac523;
+}

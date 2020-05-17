@@ -142,7 +142,7 @@ def grade_test(js: dict):
     previous_subject = test_info.get(subject, {})
     if previous_subject.get("submitted"):
         return {"error": "Already graded"}
-    time_taken_at = previous_subject.get("test_taken_at")
+    # time_taken_at = previous_subject.get("test_taken_at")
 
     question_paper = get_question_paper(student.grade, subject)
 
@@ -228,6 +228,36 @@ def quicksave(js: dict):
         return {"fail": True}
 
 
+SIX_HOURS = 6 * 60 * 60
+
+
+def report_answers(js: dict):
+    user = get_current_user()
+    if not user:
+        return {"error": "Not logged in"}
+
+    student = get_student_by_id(user)
+
+    testing_info = _get_subject_test_info(student)
+
+    subject = js.get("subject").strip()
+
+    if subject not in testing_info:
+        return {"error": "Not so fast.."}
+    subj = testing_info[subject]
+    test_time = subj.get("test_taken_at")
+    if time() - test_time < SIX_HOURS:
+        return {
+            "error": "Answers are not available yet..they will be released 6 hours from your attempt"
+        }
+    student_score = subj["score"]
+    paper = get_question_paper(student.grade, subject)
+    if paper is None:
+        return {"error": "Invalid request"}
+    paper["score"] = student_score
+    return paper
+
+
 def handler(req: ParsedRequest):
     action = req.action
     data = req.json
@@ -241,3 +271,5 @@ def handler(req: ParsedRequest):
         return reset(data)
     if action == "quicksave":
         return quicksave(data)
+    if action == "get-report":
+        return report_answers(data)

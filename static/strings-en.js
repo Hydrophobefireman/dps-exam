@@ -18,6 +18,7 @@ export const strings = {
 
   Profile$ClassOf: "Class of",
   Profile$YourSubjects: "Your Subjects",
+  Profile$ViewReport: "View Report",
 
   Logout$logout: "Logout",
 
@@ -49,4 +50,9 @@ export const strings = {
       h("span", prop_, subject)
     );
   },
+
+  Report$YourReportFor(subject) {
+    return `Report For ${subject}`;
+  },
+  Report$CorrectAnswers: "Correct answers",
 };

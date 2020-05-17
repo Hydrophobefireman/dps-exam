@@ -106,6 +106,7 @@ export class UsersList extends Component {
     return ret;
   }
   render(props, state) {
+    const studentList = this.getStudents();
     return h(
       "div",
       null,
@@ -144,9 +145,9 @@ export class UsersList extends Component {
         state.filterGrade ? "Class " + state.filterGrade : "All",
         " students"
       ),
-      h("div", null, this.getStudents()),
-      state.data &&
-        state.showCount < state.data.length &&
+      h("div", null, studentList),
+      studentList &&
+        state.showCount === studentList.length &&
         h(
           "button",
           { class: "show-more hoverable", onClick: this.increment },
@@ -166,10 +167,11 @@ class StudentDetailsEditor extends Component {
       waitingForResetConfirmation: true,
       subjectReset: e.target.dataset.subject,
     });
-  _cancel = this.setState({
-    waitingForResetConfirmation: false,
-    subjectReset: null,
-  });
+  _cancel = () =>
+    this.setState({
+      waitingForResetConfirmation: false,
+      subjectReset: null,
+    });
   render(props, state) {
     const student = props.student;
     if (state.waitingForResetConfirmation)

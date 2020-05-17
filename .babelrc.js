@@ -1,12 +1,12 @@
 const plugins = [
   "@babel/plugin-proposal-class-properties",
-  // "@babel/plugin-syntax-dynamic-import",
+  "@babel/plugin-syntax-dynamic-import",
   [
     "@babel/plugin-transform-react-jsx",
     {
       throwIfNamespace: false,
       runtime: "automatic",
-      importSource: "@hydrophobefireman/ui-lib/",
+      importSource: "@hydrophobefireman/ui-lib",
     },
   ],
 ];
@@ -27,7 +27,7 @@ module.exports = {
           },
         ],
       ],
-      plugins: [...plugins],
+      plugins: [...plugins, ["@babel/plugin-transform-runtime", { corejs: 3 }]],
     },
   },
 };

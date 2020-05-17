@@ -1,4 +1,5 @@
-import { Component, redirect, h, loadURL } from "@hydrophobefireman/ui-lib";
+import { Component, redirect, h, loadURL, A } from "@hydrophobefireman/ui-lib";
+import urlencode from "@hydrophobefireman/j-utils/@build-modern/src/modules/urlencode";
 import { appEvents } from "../../globalStore";
 import { exam, user } from "../../apiRoutes";
 import { getRequest, postJSONRequest } from "../../http/requests";
@@ -125,7 +126,18 @@ function getTestInfo(x) {
   const testInfo = (store.userData.testing_info || {})[sub];
 
   if (x.subject && testInfo && testInfo.score != null)
-    return h("span", { class: "bold" }, "Score " + (testInfo.score || 0));
+    return h(
+      A,
+      {
+        class: "bold action-btn hoverable view-report",
+        href: `/report?${urlencode({ sub: x.subject })}`,
+      },
+
+      "(",
+      testInfo.score || 0,
+      ") ",
+      strings.Profile$ViewReport
+    );
 
   return h(
     "div",

@@ -23,6 +23,7 @@ export default function Question(props) {
       onClick: setOption,
       questionIndex: i,
       answered,
+      correct: x.correct,
     })
   );
 }
@@ -32,6 +33,7 @@ function Options(props) {
     "div",
     null,
     props.options.map((option, idx) => {
+      const correctAnswer = props.correct === idx;
       return h(
         "div",
         { class: "option-box" },
@@ -40,8 +42,9 @@ function Options(props) {
           "div",
           {
             onClick: props.onClick,
-            class:
-              "question-choice" + (idx === props.answered ? " selected" : ""),
+            class: `question-choice${
+              idx === props.answered ? " selected" : ""
+            }${correctAnswer ? " correct" : ""}`,
             "data-option_index": idx,
             "data-question_index": props.questionIndex,
           },

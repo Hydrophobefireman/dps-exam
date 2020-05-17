@@ -26,4 +26,5 @@ export const exam = {
 
   gradeTest: apiURL("/api/exam/grade-test"),
   quickSave: apiURL("/api/exam/quicksave"),
+  getReport: apiURL("/api/exam/get-report"),
 };

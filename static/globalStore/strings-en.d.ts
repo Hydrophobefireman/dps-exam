@@ -17,7 +17,7 @@ export type strings = {
 
   Profile$ClassOf: "Class of";
   Profile$YourSubjects: "Your Subjects";
-
+  Profile$ViewReport: "View Report";
   Logout$logout: "Logout";
 
   Exam$Begin: "Begin Examination";
@@ -37,5 +37,13 @@ export type strings = {
 
   Admin$LoadingUsers: "Loading all students from database";
   Admin$AreYouSure: "Are You sure?";
-  Admin$AboutToExecuteReset(name: string, scholar, subject: string): string;
+  Admin$AboutToExecuteReset(
+    name: string,
+    scholar: number,
+    subject: string
+  ): string;
+
+  Report$YourReportFor(subject: string): string;
+
+  Report$CorrectAnswers: "Correct answers";
 };
