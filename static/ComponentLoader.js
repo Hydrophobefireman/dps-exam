@@ -3,25 +3,11 @@ import {
   AsyncComponent,
   absolutePath,
   redirect,
+  h,
 } from "@hydrophobefireman/ui-lib";
 import entries from "@hydrophobefireman/j-utils/@build-modern/src/modules/Object/entries";
 
 import { LoadingDefaultComponent } from "./FallbackComponents";
-
-const getDefault = (module_) => module_.default;
-
-const getRouteChild = (path, promise) => {
-  const RouteChild = () => (
-    <section data-application-state={path}>
-      <AsyncComponent
-        componentPromise={promise}
-        fallbackComponent={LoadingDefaultComponent}
-      />
-    </section>
-  );
-
-  return <RouteChild path={absolutePath(path)} />;
-};
 
 const componentMap = {
   "/": () => import("./components/Landing/Landing").then(getDefault),
@@ -30,16 +16,44 @@ const componentMap = {
   "/admin": () => import("./components/Admin/Admin").then(getDefault),
 };
 
+const getDefault = (module_) => module_.default;
+
+const getRouteChild = (path, promise) => {
+  const RouteChild = () =>
+    h(
+      "section",
+      {
+        "data-application-state": path,
+      },
+      h(AsyncComponent, {
+        componentPromise: promise,
+        fallbackComponent: LoadingDefaultComponent,
+      })
+    );
+
+  return h(RouteChild, {
+    path: absolutePath(path),
+  });
+};
+
 export function ComponentLoader(props) {
-  return (
-    <main class="router-app">
-      <div class="router-parent">
-        <Router>
-          {entries(componentMap).map(([path, promise]) =>
-            getRouteChild(path, promise)
-          )}
-        </Router>
-      </div>
-    </main>
+  return h(
+    "main",
+    {
+      class: "router-app",
+    },
+    h(
+      "div",
+      {
+        class: "router-parent",
+      },
+      h(
+        Router,
+        null,
+        entries(componentMap).map(([path, promise]) =>
+          getRouteChild(path, promise)
+        )
+      )
+    )
   );
 }

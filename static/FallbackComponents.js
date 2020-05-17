@@ -1,3 +1,4 @@
+import { h } from "@hydrophobefireman/ui-lib";
 import { appEvents } from "./globalStore";
 const strings = appEvents.getStrings();
 export const centerTextCSS = {
@@ -13,9 +14,23 @@ export const centerTextCSS = {
   justifyContent: "center",
   alignItems: "center",
 };
+
 export function UnexpectedError() {
-  return <div style={centerTextCSS}>{strings.Error$BodyText}</div>;
+  return h(
+    "div",
+    {
+      style: centerTextCSS,
+    },
+    strings.Error$BodyText
+  );
 }
+
 export function LoadingDefaultComponent() {
-  return <div style={centerTextCSS}>{strings.Loading$Default}</div>;
+  return h(
+    "div",
+    {
+      style: centerTextCSS,
+    },
+    strings.Loading$Default
+  );
 }
