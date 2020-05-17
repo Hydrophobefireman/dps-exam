@@ -34,4 +34,8 @@ export type strings = {
   Exam$TimeAllotted: "Time allotted - ";
   Exam$TimeLeft: "Time Left - ";
   Exam$Submit: "Submit";
+
+  Admin$LoadingUsers: "Loading all students from database";
+  Admin$AreYouSure: "Are You sure?";
+  Admin$AboutToExecuteReset(name: string, scholar, subject: string): string;
 };

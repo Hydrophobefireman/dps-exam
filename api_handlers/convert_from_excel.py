@@ -129,7 +129,7 @@ def attemp_minify(o: list):
         if is_dict and i["type"] != "text":
             return o
         ret.append(i["value"] if is_dict else i)
-    return "".join(i)
+    return "".join(ret)
 
 
 def optimize_question_data(q_data: list):
@@ -144,7 +144,7 @@ def optimize_question_data(q_data: list):
     return next_l
 
 
-def make_q():
+def make_q__simple():
     add = input
     print("\nQuestion:")
     q = add("q:")

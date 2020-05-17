@@ -2,7 +2,7 @@ import { Component, redirect, h, loadURL } from "@hydrophobefireman/ui-lib";
 import { appEvents } from "../../globalStore";
 import { exam, user } from "../../apiRoutes";
 import { getRequest, postJSONRequest } from "../../http/requests";
-import { toHours } from "../common";
+import { toHours, stampFormat } from "../common";
 
 const store = appEvents.getStore();
 const strings = appEvents.getStrings();
@@ -146,37 +146,4 @@ function TimeFormatter(props) {
   const ts = new Date(props.ts * 1000);
   // ts.setHours(10, 0, 0);
   return stampFormat(ts);
-}
-
-function isSameDay(c, d) {
-  return (
-    c.getFullYear() === d.getFullYear() &&
-    c.getMonth() === d.getMonth() &&
-    c.getDate() === d.getDate()
-  );
-}
-const options = {
-  hour: "numeric",
-  hour12: true,
-  minute: "numeric",
-  // second: "numeric",
-};
-const hasIntl = typeof Intl !== "undefined";
-export function stampFormat(timeStamp) {
-  const ts = new Date(timeStamp);
-  try {
-    if (hasIntl) {
-      const date = new Date();
-      if (ts.getFullYear() !== date.getFullYear()) {
-        options.year = "numeric";
-      }
-      if (!isSameDay(ts, date)) {
-        options.month = options.day = "numeric";
-      }
-      return Intl.DateTimeFormat("en-in", options).format(ts).toUpperCase();
-    }
-  } catch (e) {
-    return console.log(e);
-  }
-  return ts.toLocaleString();
 }

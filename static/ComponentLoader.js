@@ -27,6 +27,7 @@ const componentMap = {
   "/": () => import("./components/Landing/Landing").then(getDefault),
   "/profile": () => import("./components/Profile/Profile").then(getDefault),
   "/exam": () => import("./components/Exam/Exam").then(getDefault),
+  "/admin": () => import("./components/Admin/Admin").then(getDefault),
 };
 
 export function ComponentLoader(props) {

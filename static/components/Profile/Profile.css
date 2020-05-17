@@ -31,6 +31,7 @@
   justify-content: center;
   text-transform: capitalize;
 }
+.action-btn,
 .next-exam {
   border: 1px solid var(--font-color);
   outline: none;

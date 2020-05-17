@@ -14,6 +14,10 @@ export const user = {
   getUserDetails: apiURL("/api/auth/get-status"),
 
   logout: apiURL("/api/logout"),
+
+  getAllStudents: apiURL("/api/auth/get-all-students"),
+
+  resetSubject: apiURL("/api/auth/reset-subject"),
 };
 export const exam = {
   getSubjectInfo: apiURL("/api/exam/get-subject-info"),

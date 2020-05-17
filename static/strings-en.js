@@ -1,3 +1,4 @@
+import { h } from "@hydrophobefireman/ui-lib";
 export const strings = {
   Error$TitleDefault: "An error occured",
   Error$BodyText: "An unexpected error occured",
@@ -35,4 +36,17 @@ export const strings = {
   Exam$TimeAllotted: "Time allotted - ",
   Exam$TimeLeft: "Time Left - ",
   Exam$Submit: "Submit",
+
+  Admin$AreYouSure: "Are You sure?",
+  Admin$AboutToExecuteReset(name, scholar, subject) {
+    const prop_ = { style: { fontWeight: "bold", color: "red" } };
+    return h(
+      "div",
+      null,
+      "You are about to reset ",
+      h("span", prop_, name, "(", scholar, ")"),
+      "'s marks for ",
+      h("span", prop_, subject)
+    );
+  },
 };

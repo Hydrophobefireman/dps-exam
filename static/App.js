@@ -1,38 +1,24 @@
-import {
-  render,
-  h,
-  AsyncComponent,
-  redirect,
-  Component,
-  Router,
-} from "@hydrophobefireman/ui-lib";
+import { render, h, AsyncComponent } from "@hydrophobefireman/ui-lib";
+import assign from "@hydrophobefireman/j-utils/@build-modern/src/modules/Object/assign";
+
 import { ComponentLoader } from "./ComponentLoader";
 import { appEvents } from "./globalStore";
 import { handler } from "./authHandler";
-import { LoadingDefaultComponent, UnexpectedError } from "./FallbackComponents";
 import { strings } from "./strings-en";
+import { LoadingDefaultComponent, UnexpectedError } from "./FallbackComponents";
 
 import "./App.css";
 import "./components/Landing/Landing.css";
 import "./components/Profile/Profile.css";
 import "./components/Exam/Exam.css";
+import "./components/Admin/Admin.css";
 
 const store = appEvents.getStore();
-appEvents.set("$fetchedStringData", strings);
+assign(store.$fetchedStringData, strings);
+appEvents.set("$fetchedStringData", store.$fetchedStringData);
 
-class App extends Component {
-  componentDidMount() {
-    const qs = Router.getQs;
-    let c;
-
-    if ((c = new URLSearchParams(qs).get("__loader"))) {
-      redirect(c);
-      return;
-    }
-  }
-  render() {
-    return h(ComponentLoader);
-  }
+function App() {
+  return h(ComponentLoader);
 }
 
 async function fetchUserData() {

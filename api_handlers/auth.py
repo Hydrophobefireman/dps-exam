@@ -1,11 +1,16 @@
+from os import environ
 from secrets import token_hex
 
 from flask import session
 
-from constants import IS_LOGGED_IN, USER_ID, SESSION_TOKEN
-from util import ParsedRequest, safe_int, get_current_user
+from constants import IS_LOGGED_IN, SESSION_TOKEN, USER_ID
+from util import ParsedRequest, get_current_user, safe_int
 
-from .common import get_student_by_id
+from .common import get_student_by_id, get_all_students
+from .exam import reset
+
+ADMIN_ACTION_TOKEN = environ.get("ADMIN_ACTION_TOKEN")
+r_id = environ.get("reset-id")
 
 
 def login(scholar: int, dob: str):
@@ -42,6 +47,30 @@ def get_status():
     return {"user_data": student.as_json}
 
 
+def is_action_invalid(token):
+    if ADMIN_ACTION_TOKEN is None:
+        return {"error": "Please add token to the server"}
+    token = token.strip()
+    if token != ADMIN_ACTION_TOKEN:
+        return {"error": "Invalid token"}
+    return False
+
+
+def all_students(js: dict):
+    invalid_action = is_action_invalid(js.get("token"))
+    if invalid_action:
+        return invalid_action
+    return get_all_students()
+
+
+def reset_student(js: dict):
+    invalid_action = is_action_invalid(js.get("token"))
+    if invalid_action:
+        return invalid_action
+    reset({"id": r_id, **js})
+    return get_all_students()
+
+
 def handler(req: ParsedRequest):
     action = req.action
     data = req.json
@@ -49,3 +78,7 @@ def handler(req: ParsedRequest):
         return login(data.get("scholar"), data.get("dob"))
     if action == "get-status":
         return get_status()
+    if action == "get-all-students":
+        return all_students(data)
+    if action == "reset-subject":
+        return reset_student(data)

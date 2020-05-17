@@ -1,6 +1,6 @@
 from app_init import UserTable as _U, TestPapers as _T, db as _db
 from util import map_to_list as _map
-from response_caching import cache
+from response_caching import cache as _cache
 
 
 def _get_subject_data(data: _T):
@@ -9,11 +9,15 @@ def _get_subject_data(data: _T):
     return js
 
 
+def _get_student_data(data: _U):
+    return data.as_json
+
+
 def get_student_by_id(idx: int) -> _U:
     return _U.query.filter_by(scholar=idx).first()
 
 
-@cache(lambda x, y: f"{y}--{x}-paper")
+@_cache(lambda x, y: f"{y}--{x}-paper")
 def get_question_paper(grade: int, subject: str) -> _T.as_json:
     res = _T.query.filter_by(grade=grade, subject=subject).first()
     return res.as_json if res else None
@@ -24,8 +28,13 @@ def get_eligible_subjects(student: _U) -> list:
         _get_subject_data,
         _T.query.filter(
             (_T.grade == student.grade)
-            & _T.subject.in_(student.as_json["subject_info"])).all(),
+            & _T.subject.in_(student.as_json["subject_info"])
+        ).all(),
     )
+
+
+def get_all_students():
+    return _map(_get_student_data, _U.query.all())
 
 
 # pylint: disable=E1101
