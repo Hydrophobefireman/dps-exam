@@ -57,6 +57,8 @@ def is_action_invalid(token):
 
 
 def all_students(js: dict):
+    print("LOL", get_current_user())
+    return {"error": "password is hunter2.."}
     invalid_action = is_action_invalid(js.get("token"))
     if invalid_action:
         return invalid_action
