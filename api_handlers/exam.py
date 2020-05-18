@@ -245,7 +245,7 @@ def report_answers(js: dict):
     if subject not in testing_info:
         return {"error": "Not so fast.."}
     subj = testing_info[subject]
-    test_time = subj.get("test_taken_at")
+    test_time = subj.get("test_taken_at", 0)
     if time() - test_time < SIX_HOURS:
         return {
             "error": "Answers are not available yet..they will be released 6 hours from your attempt"
