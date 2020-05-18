@@ -121,28 +121,10 @@ def get_subject_info():
     return {"subjects": subjects, "now": time(), "user_data": student.as_json}
 
 
-def grade_test(js: dict):
-    user = safe_int(js.get("scholar"))
-    subject = js.get("subject")
-    answers = js.get("answers")
-    assert session[SESSION_TOKEN]
-
-    test_end_time = time()
-
-    student = get_student_by_id(user)
-
-    if student is None:
-        return {"error": "No such student"}
-
-    if subject not in student.as_json["subject_info"]:
-        return {"error": "Not eligible to give test"}
-
-    test_info: dict = _get_subject_test_info(student)
-
-    previous_subject = test_info.get(subject, {})
-    if previous_subject.get("submitted"):
-        return {"error": "Already graded"}
-    # time_taken_at = previous_subject.get("test_taken_at")
+def _grade_paper(student, subject, answers, test_info=None, save=True):
+    user = student.scholar
+    if test_info is None:
+        test_info = _get_subject_test_info(student)
 
     question_paper = get_question_paper(student.grade, subject)
 
@@ -168,8 +150,35 @@ def grade_test(js: dict):
             "test_taken_at": test_info[subject].get("test_taken_at"),
         }
         student.set_testing_info(test_info)
-        save_to_db()
+        if save:
+            save_to_db()
     return {"total": total, "score": score, "user_data": student.as_json}
+
+
+def grade_test(js: dict):
+    user = safe_int(js.get("scholar"))
+    subject = js.get("subject")
+    answers = js.get("answers")
+    assert session[SESSION_TOKEN]
+
+    test_end_time = time()
+
+    student = get_student_by_id(user)
+
+    if student is None:
+        return {"error": "No such student"}
+
+    if subject not in student.as_json["subject_info"]:
+        return {"error": "Not eligible to give test"}
+
+    test_info: dict = _get_subject_test_info(student)
+
+    previous_subject = test_info.get(subject, {})
+    if previous_subject.get("submitted"):
+        return {"error": "Already graded"}
+    # time_taken_at = previous_subject.get("test_taken_at")
+
+    return _grade_paper(student, subject, answers, test_info)
 
 
 def reset(js: dict):

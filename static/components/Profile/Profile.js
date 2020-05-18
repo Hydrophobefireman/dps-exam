@@ -68,20 +68,6 @@ export default class Profile extends Component {
             style: { marginTop: "30px" },
           },
           strings.Logout$logout
-        ),
-        h(
-          A,
-          {
-            href: "/admin",
-            class: "submit-exam hoverable",
-            style: {
-              display: "block",
-              color: "var(--font-color)",
-              margin: "auto",
-              marginTop: "30px",
-            },
-          },
-          "Admin Panel"
         )
       )
     );
