@@ -49,7 +49,7 @@ def get_status():
 
 def is_action_invalid(token):
     if ADMIN_ACTION_TOKEN is None:
-        return {"error": "Please add token to the server"}
+        return {"error": "You could have spent this time studying but ok"}
     token = token.strip()
     if token != ADMIN_ACTION_TOKEN:
         return {"error": "Invalid token"}
@@ -63,7 +63,6 @@ def all_students(js: dict):
             "error": "Please sign in first (use any student scholar number. Your admin password is the same. (Computer Lab)"
         }
     print(curr, "admin action")
-    return {"error": "You could have spent this time studying but ok"}
     invalid_action = is_action_invalid(js.get("token"))
     if invalid_action:
         return invalid_action
