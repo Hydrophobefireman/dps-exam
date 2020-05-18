@@ -243,6 +243,7 @@ def report_answers(js: dict):
     subject = js.get("subject").strip()
 
     if subject not in testing_info:
+        print(student.name, user, "Report acces for ", subject)
         return {"error": "Not so fast.."}
     subj = testing_info[subject]
     test_time = subj.get("test_taken_at", 0)
