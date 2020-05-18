@@ -6,6 +6,7 @@ const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin")
   .default;
 const WebpackModuleNoModulePlugin = require("webpack-module-nomodule-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const ClosurePlugin = require("closure-webpack-plugin");
 
 const { basename } = require("path");
 const isProd = basename(__filename).includes(".prod");
@@ -42,12 +43,12 @@ const contentLoaderOptions = {
 };
 function getCfg(isLegacy) {
   return {
-    cache: {
-      type: "filesystem",
-      buildDependencies: {
-        config: [__filename],
-      },
-    },
+    // cache: {
+    //   type: "filesystem",
+    //   buildDependencies: {
+    //     config: [__filename],
+    //   },
+    // },
     devServer: {
       contentBase: `${__dirname}/docs`,
       compress: !0,
@@ -64,13 +65,27 @@ function getCfg(isLegacy) {
     entry: `${__dirname}/static/App.js`,
     output: {
       publicPath: isProd ? "/docs/" : "/",
-      ecmaVersion: isLegacy ? 5 : 6,
-      path: `${__dirname}/docs`,
+      // ecmaVersion: isLegacy ? 5 : 6,
+      path: `${__dirname}/docs/`,
       filename: `${isLegacy ? "legacy" : "es6"}/[name]-[contenthash].js`,
     },
     mode,
     optimization: {
-      minimizer: prodOrDev([new TerserWebpackPlugin({ parallel: !0 })], []),
+      concatenateModules: false,
+      minimizer: prodOrDev(
+        [
+          new ClosurePlugin(
+            {
+              platform: ["native"],
+              mode: "AGGRESSIVE_BUNDLE",
+            },
+            {
+              language_out: isLegacy ? "ECMASCRIPT5_STRICT" : "ECMASCRIPT_2015",
+            }
+          ),
+        ],
+        []
+      ),
       splitChunks: {
         chunks: "all",
       },
@@ -101,11 +116,6 @@ function getCfg(isLegacy) {
         : null,
       isProd ? new HTMLInlineCSSWebpackPlugin({}) : null,
       new WebpackModuleNoModulePlugin(isLegacy ? "legacy" : "modern"),
-      // new InlinePlugin(),
-      // new SRIPlugin({
-      //   hashFuncNames: ["sha256", "sha384", "sha512"],
-      //   enabled: isProd,
-      // }),
     ].filter(Boolean),
   };
 }
