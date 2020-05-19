@@ -28,7 +28,6 @@ export default function Report() {
 
 function TestReport(props) {
   const data = props.data;
-  console.log(data);
   return h(
     "div",
     null,
