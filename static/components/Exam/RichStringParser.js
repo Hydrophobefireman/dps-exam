@@ -27,7 +27,10 @@ function get(x) {
     case "img":
       return h(
         "div",
-        { style: "text-align:center" },
+        {
+          style:
+            "text-align: center;pointer-events: none;display: inline-block;",
+        },
         h("img", { src: value, class: "opt-img" })
       );
     case "underline":
