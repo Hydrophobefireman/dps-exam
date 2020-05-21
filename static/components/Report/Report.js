@@ -7,7 +7,7 @@ import Question from "../Exam/Question";
 const strings = appEvents.getStrings();
 
 async function loadAnswers() {
-  const q = new URLSearchParams(Router.getQs).get("sub");
+  const q = Router.getCurrentParams("/report/:sub").sub.trim();
   if (!q) return () => "Invalid Subject";
   const req = await postJSONRequest(exam.getReport, { subject: q });
   if (req.error)

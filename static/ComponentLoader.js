@@ -2,8 +2,8 @@ import {
   Router,
   AsyncComponent,
   absolutePath,
-  redirect,
   h,
+  Path,
 } from "@hydrophobefireman/ui-lib";
 import entries from "@hydrophobefireman/j-utils/@build-modern/src/modules/Object/entries";
 
@@ -12,9 +12,9 @@ import { LoadingDefaultComponent } from "./FallbackComponents";
 const componentMap = {
   "/": () => import("./components/Landing/Landing").then(getDefault),
   "/profile": () => import("./components/Profile/Profile").then(getDefault),
-  "/exam": () => import("./components/Exam/Exam").then(getDefault),
+  "/exam/:sub": () => import("./components/Exam/Exam").then(getDefault),
   "/admin": () => import("./components/Admin/Admin").then(getDefault),
-  "/report": () => import("./components/Report/Report").then(getDefault),
+  "/report/:sub": () => import("./components/Report/Report").then(getDefault),
 };
 
 const getDefault = (module_) => module_.default;
@@ -31,10 +31,11 @@ const getRouteChild = (path, promise) => {
         fallbackComponent: LoadingDefaultComponent,
       })
     );
-
-  return h(RouteChild, {
-    path: absolutePath(path),
-  });
+  return <Path match={path} component={RouteChild} />;
+  // return h(Path, {
+  //   match: absolutePath(path),
+  //   component: RouteChild,
+  // });
 };
 
 export function ComponentLoader(props) {

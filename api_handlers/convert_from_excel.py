@@ -89,7 +89,7 @@ from app_init import *
 from time import time
 
 
-def add_paper(subject, data, tx, cl=12,ts=0):
+def add_paper(subject, data, tx, cl=12, ts=0):
     p = TestPapers(subject.lower().strip(), cl, tx, data, ts or time() + 2000)
     db.session.add(p)
     db.session.commit()
@@ -153,3 +153,33 @@ def make_q__simple():
     opts = (o1, o2, o3, o4)
     correct = 0
     return {"question": q, "options": list(opts), "correct": correct}
+
+
+def get_score(x, y, ret=0):
+    ti = x.as_json["testing_info"] or {}
+    sub = ti.get(y) or {}
+    return sub.get("score") or ret
+
+
+score_arr = []
+
+
+def create_scores(x):
+    return {
+        "scholar": x.scholar,
+        "class": x.grade,
+        "name": x.name,
+        **{sub: get_score(x, sub, None) for sub in score_arr},
+    }
+
+
+def make_df(x):
+    df = __import__("pandas").DataFrame(x)
+    df = df.transpose()
+    index = list(df.index)
+    new_idx = ["scholar", "name", "class"]
+    [index.pop(index.index(x)) for x in new_idx]
+    ext = index[:3]
+    index[:3] = new_idx
+    index.extend(ext)
+    return df.reindex(index)

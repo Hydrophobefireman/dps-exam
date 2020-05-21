@@ -118,7 +118,8 @@ function SubjectInfo(props) {
     )
   );
 }
-const loadNextExam = (e) => loadURL(`/exam?sub=${e.target.dataset.subject}`);
+const loadNextExam = (e) =>
+  loadURL(`/exam/${encodeURIComponent(e.target.dataset.subject)}`);
 
 function getTestInfo(x) {
   const sub = x.subject || x;
@@ -130,7 +131,7 @@ function getTestInfo(x) {
       A,
       {
         class: "bold action-btn hoverable view-report",
-        href: `/report?${urlencode({ sub: x.subject })}`,
+        href: `/report/${encodeURIComponent(x.subject)}`,
       },
 
       "(",

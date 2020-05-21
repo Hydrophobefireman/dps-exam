@@ -99,7 +99,7 @@ export default class Exam extends Component {
   componentDidMount() {
     if (!store.isLoggedIn) return redirect("/");
 
-    const qs = new URLSearchParams(Router.getQs).get("sub");
+    const qs = Router.getCurrentParams("/exam/:sub").sub.trim();
 
     if (!qs) return this.setState({ error: strings.Exam$Invalid });
 
