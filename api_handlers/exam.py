@@ -237,7 +237,7 @@ def quicksave(js: dict):
         return {"fail": True}
 
 
-SIX_HOURS = 0 * 6 * 60 * 60
+SIX_HOURS = 6 * 60 * 60
 
 
 def report_answers(js: dict):
