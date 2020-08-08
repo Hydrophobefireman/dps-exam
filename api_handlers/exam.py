@@ -25,7 +25,7 @@ def remove_answers(js: dict,):
     return js
 
 
-_DISALLOW_TEST_IF_TOO_LATE = True
+_DISALLOW_TEST_IF_TOO_LATE = False
 MAX_ALLOW = 2 * 60 * 60
 
 
